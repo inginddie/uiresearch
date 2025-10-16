@@ -14,6 +14,10 @@
 
 </div>
 
+## 📸 Preview
+
+![UIResearch Screenshot](docs/images/screenshot.png)
+
 ## 📋 Descripción
 
 UIResearch es una aplicación web moderna para buscar, filtrar y exportar referencias académicas desde la API de Crossref. Diseñada para investigadores, estudiantes y profesionales que necesitan acceso rápido a millones de publicaciones científicas.
