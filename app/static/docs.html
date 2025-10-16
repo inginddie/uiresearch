@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación - UIResearch</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/docs.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="url(#gradient1)"/>
+                    <path d="M12 14C12 12.8954 12.8954 12 14 12H18C19.1046 12 20 12.8954 20 14V26C20 27.1046 19.1046 28 18 28H14C12.8954 28 12 27.1046 12 26V14Z" fill="white"/>
+                    <path d="M22 18C22 16.8954 22.8954 16 24 16H26C27.1046 16 28 16.8954 28 18V26C28 27.1046 27.1046 28 26 28H24C22.8954 28 22 27.1046 22 26V18Z" fill="white" fill-opacity="0.8"/>
+                    <circle cx="16" cy="8" r="2" fill="white"/>
+                    <circle cx="25" cy="12" r="1.5" fill="white" fill-opacity="0.8"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#6366F1"/>
+                            <stop offset="1" stop-color="#8B5CF6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">UIResearch</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Búsqueda</a>
+                <a href="/static/docs.html" class="nav-link active">Documentación</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Contenido</h3>
+                <ul>
+                    <li><a href="#introduccion">Introducción</a></li>
+                    <li><a href="#instalacion">Instalación</a></li>
+                    <li><a href="#configuracion">Configuración</a></li>
+                    <li><a href="#uso-web">Uso de la Interfaz Web</a></li>
+                    <li><a href="#api">API REST</a></li>
+                    <li><a href="#cli">CLI</a></li>
+                    <li><a href="#ejemplos">Ejemplos</a></li>
+                    <li><a href="#troubleshooting">Solución de Problemas</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="docs-content">
+            <section id="introduccion">
+                <h1>Documentación de UIResearch</h1>
+                <p class="lead">UIResearch es una herramienta profesional para buscar, filtrar y exportar referencias académicas desde la API de Crossref.</p>
+                
+                <div class="info-box">
+                    <h4>🎯 Características principales</h4>
+                    <ul>
+                        <li>Búsqueda rápida en millones de artículos académicos</li>
+                        <li>Filtros avanzados por fecha, tipo de contenido y más</li>
+                        <li>Exportación a CSV y BibTeX</li>
+                        <li>Interfaz web moderna y CLI para automatización</li>
+                        <li>API REST completa</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="instalacion">
+                <h2>Instalación</h2>
+                
+                <h3>Requisitos previos</h3>
+                <ul>
+                    <li>Python 3.10 o superior</li>
+                    <li>pip (gestor de paquetes de Python)</li>
+                </ul>
+
+                <h3>Paso 1: Clonar o descargar el proyecto</h3>
+                <pre><code>git clone https://github.com/tu-usuario/uiresearch.git
+cd uiresearch</code></pre>
+
+                <h3>Paso 2: Instalar dependencias</h3>
+                <pre><code>pip install -r requirements.txt</code></pre>
+
+                <h3>Paso 3: Configurar variables de entorno</h3>
+                <p>Crea un archivo <code>.env</code> en la raíz del proyecto:</p>
+                <pre><code># Crossref Configuration
+APP_USER_AGENT=CrossrefSearch/1.0
+APP_MAILTO=tu-email@example.com
+
+# Server Configuration
+PORT=8000
+LOG_LEVEL=INFO
+
+# CORS (comma-separated)
+CORS_ORIGINS=http://localhost:8000,http://localhost:3000
+
+# Rate Limiting
+RATE_LIMIT_SEARCHES=10/minute
+RATE_LIMIT_EXPORTS=5/minute
+
+# Crossref Client
+CROSSREF_TIMEOUT=30
+MAX_RETRIES=3</code></pre>
+
+                <h3>Paso 4: Iniciar el servidor</h3>
+                <pre><code>uvicorn app.main:app --host 0.0.0.0 --port 8000</code></pre>
+
+                <p>La aplicación estará disponible en <code>http://localhost:8000</code></p>
+            </section>
+
+            <section id="configuracion">
+                <h2>Configuración</h2>
+                
+                <h3>Variables de entorno</h3>
+                <table class="config-table">
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Descripción</th>
+                            <th>Valor por defecto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>APP_USER_AGENT</code></td>
+                            <td>Identificador de la aplicación</td>
+                            <td>CrossrefSearch/1.0</td>
+                        </tr>
+                        <tr>
+                            <td><code>APP_MAILTO</code></td>
+                            <td>Email de contacto (requerido)</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>PORT</code></td>
+                            <td>Puerto del servidor</td>
+                            <td>8000</td>
+                        </tr>
+                        <tr>
+                            <td><code>LOG_LEVEL</code></td>
+                            <td>Nivel de logging</td>
+                            <td>INFO</td>
+                        </tr>
+                        <tr>
+                            <td><code>CROSSREF_TIMEOUT</code></td>
+                            <td>Timeout para peticiones (segundos)</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td><code>MAX_RETRIES</code></td>
+                            <td>Número máximo de reintentos</td>
+                            <td>3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="uso-web">
+                <h2>Uso de la Interfaz Web</h2>
+                
+                <h3>Realizar una búsqueda</h3>
+                <ol>
+                    <li>Ingresa las palabras clave en el campo de búsqueda</li>
+                    <li>Ajusta los filtros según tus necesidades:
+                        <ul>
+                            <li><strong>Fechas:</strong> Define el rango temporal</li>
+                            <li><strong>Tipo de contenido:</strong> Artículo de revista, conferencia o capítulo</li>
+                            <li><strong>Ordenación:</strong> Por relevancia o fecha de publicación</li>
+                        </ul>
+                    </li>
+                    <li>Haz clic en "Buscar"</li>
+                </ol>
+
+                <h3>Exportar resultados</h3>
+                <p>Una vez obtenidos los resultados, puedes:</p>
+                <ul>
+                    <li><strong>Exportar a CSV:</strong> Haz clic en el botón "Exportar a CSV"</li>
+                    <li><strong>Acceder al DOI:</strong> Haz clic en el enlace del DOI para ver el artículo completo</li>
+                    <li><strong>Ver abstract:</strong> Expande la sección "Ver abstract" en cada tarjeta</li>
+                </ul>
+            </section>
+
+            <section id="api">
+                <h2>API REST</h2>
+                
+                <h3>GET /search</h3>
+                <p>Busca referencias académicas en Crossref.</p>
+                
+                <h4>Parámetros de consulta</h4>
+                <table class="config-table">
+                    <thead>
+                        <tr>
+                            <th>Parámetro</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Por defecto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>q</code></td>
+                            <td>string</td>
+                            <td>Palabras clave (requerido)</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>from_date</code></td>
+                            <td>string</td>
+                            <td>Fecha inicio (YYYY-MM-DD)</td>
+                            <td>2023-01-01</td>
+                        </tr>
+                        <tr>
+                            <td><code>until_date</code></td>
+                            <td>string</td>
+                            <td>Fecha fin (YYYY-MM-DD)</td>
+                            <td>2025-12-31</td>
+                        </tr>
+                        <tr>
+                            <td><code>content_type</code></td>
+                            <td>string</td>
+                            <td>Tipo de contenido</td>
+                            <td>journal-article</td>
+                        </tr>
+                        <tr>
+                            <td><code>has_abstract</code></td>
+                            <td>boolean</td>
+                            <td>Requiere abstract</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td><code>rows</code></td>
+                            <td>integer</td>
+                            <td>Resultados por página (1-100)</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td><code>max_results</code></td>
+                            <td>integer</td>
+                            <td>Máximo total (1-500)</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <td><code>sort</code></td>
+                            <td>string</td>
+                            <td>Ordenación (relevance/published)</td>
+                            <td>relevance</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Ejemplo de petición</h4>
+                <pre><code>curl "http://localhost:8000/search?q=machine+learning&from_date=2023-01-01&rows=10"</code></pre>
+
+                <h4>Respuesta exitosa (200)</h4>
+                <pre><code>{
+  "count": 87,
+  "items": [
+    {
+      "doi": "10.1234/example",
+      "title": "Machine Learning Applications",
+      "authors": "John Doe; Jane Smith",
+      "year": 2024,
+      "journal": "Journal of AI",
+      "abstract": "This paper explores...",
+      "url": "https://doi.org/10.1234/example"
+    }
+  ]
+}</code></pre>
+
+                <h3>GET /export/csv</h3>
+                <p>Exporta resultados de búsqueda a CSV.</p>
+                <p>Usa los mismos parámetros que <code>/search</code>.</p>
+                
+                <h4>Ejemplo</h4>
+                <pre><code>curl "http://localhost:8000/export/csv?q=climate+change&rows=50" -o results.csv</code></pre>
+
+                <h3>GET /export/bibtex</h3>
+                <p>Exporta referencias en formato BibTeX.</p>
+                
+                <h4>Parámetros</h4>
+                <ul>
+                    <li><code>dois</code> (string): Lista de DOIs separados por comas</li>
+                </ul>
+                
+                <h4>Ejemplo</h4>
+                <pre><code>curl "http://localhost:8000/export/bibtex?dois=10.1234/example1,10.1234/example2" -o refs.bib</code></pre>
+
+                <h3>GET /healthz</h3>
+                <p>Verifica el estado de salud de la aplicación.</p>
+                <pre><code>curl http://localhost:8000/healthz</code></pre>
+
+                <h3>GET /metrics</h3>
+                <p>Expone métricas en formato Prometheus.</p>
+                <pre><code>curl http://localhost:8000/metrics</code></pre>
+            </section>
+
+            <section id="cli">
+                <h2>CLI (Línea de Comandos)</h2>
+                
+                <p class="info-box">⚠️ <strong>Nota:</strong> El CLI estará disponible en la próxima versión.</p>
+                
+                <h3>Uso básico (próximamente)</h3>
+                <pre><code>python cli/search_crossref_cli.py "machine learning" \
+  --from 2023-01-01 \
+  --until 2024-12-31 \
+  --type journal-article \
+  --rows 30 \
+  --max 120 \
+  --csv output.csv</code></pre>
+            </section>
+
+            <section id="ejemplos">
+                <h2>Ejemplos</h2>
+                
+                <h3>Búsqueda simple</h3>
+                <pre><code>curl "http://localhost:8000/search?q=artificial+intelligence"</code></pre>
+
+                <h3>Búsqueda con filtros</h3>
+                <pre><code>curl "http://localhost:8000/search?q=climate+change&from_date=2020-01-01&until_date=2024-12-31&content_type=journal-article&rows=50"</code></pre>
+
+                <h3>Exportar a CSV</h3>
+                <pre><code>curl "http://localhost:8000/export/csv?q=quantum+computing&max_results=100" -o quantum.csv</code></pre>
+
+                <h3>Obtener BibTeX</h3>
+                <pre><code>curl "http://localhost:8000/export/bibtex?dois=10.1038/s41586-019-1666-5" -o paper.bib</code></pre>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>Solución de Problemas</h2>
+                
+                <h3>Error: "APP_MAILTO is required"</h3>
+                <p><strong>Solución:</strong> Asegúrate de configurar la variable <code>APP_MAILTO</code> en tu archivo <code>.env</code>.</p>
+
+                <h3>Error: "Connection timeout"</h3>
+                <p><strong>Solución:</strong> Aumenta el valor de <code>CROSSREF_TIMEOUT</code> en el archivo <code>.env</code>.</p>
+
+                <h3>Error 429: "Rate limit exceeded"</h3>
+                <p><strong>Solución:</strong> Espera unos minutos antes de realizar más búsquedas. Los límites por defecto son:</p>
+                <ul>
+                    <li>Búsquedas: 10 por minuto</li>
+                    <li>Exportaciones: 5 por minuto</li>
+                </ul>
+
+                <h3>No se muestran resultados</h3>
+                <p><strong>Posibles causas:</strong></p>
+                <ul>
+                    <li>Los filtros son demasiado restrictivos</li>
+                    <li>No hay artículos que coincidan con la búsqueda</li>
+                    <li>Error de conexión con Crossref</li>
+                </ul>
+                <p><strong>Solución:</strong> Intenta con palabras clave más generales o ajusta los filtros.</p>
+
+                <h3>Ver logs</h3>
+                <p>Los logs se muestran en la consola donde ejecutaste el servidor. Para más detalles, cambia <code>LOG_LEVEL=DEBUG</code> en el archivo <code>.env</code>.</p>
+            </section>
+
+            <section>
+                <h2>Soporte</h2>
+                <p>Si tienes problemas o preguntas:</p>
+                <ul>
+                    <li>Revisa esta documentación</li>
+                    <li>Consulta los logs del servidor</li>
+                    <li>Verifica tu configuración en el archivo <code>.env</code></li>
+                    <li>Asegúrate de tener conexión a internet</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo-footer">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#gradient2)"/>
+                        <path d="M12 14C12 12.8954 12.8954 12 14 12H18C19.1046 12 20 12.8954 20 14V26C20 27.1046 19.1046 28 18 28H14C12.8954 28 12 27.1046 12 26V14Z" fill="white"/>
+                        <path d="M22 18C22 16.8954 22.8954 16 24 16H26C27.1046 16 28 16.8954 28 18V26C28 27.1046 27.1046 28 26 28H24C22.8954 28 22 27.1046 22 26V18Z" fill="white" fill-opacity="0.8"/>
+                        <circle cx="16" cy="8" r="2" fill="white"/>
+                        <circle cx="25" cy="12" r="1.5" fill="white" fill-opacity="0.8"/>
+                        <defs>
+                            <linearGradient id="gradient2" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#6366F1"/>
+                                <stop offset="1" stop-color="#8B5CF6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>UIResearch</span>
+                </div>
+                <p class="footer-description">Herramienta profesional para búsqueda de referencias académicas</p>
+            </div>
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="https://www.crossref.org/" target="_blank" rel="noopener">Crossref API</a></li>
+                    <li><a href="/static/docs.html">Documentación</a></li>
+                    <li><a href="/">Búsqueda</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Desarrollador</h4>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/inginddie" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: inline; vertical-align: middle; margin-right: 0.5rem;">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a></li>
+                    <li><a href="https://github.com/inginddie" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: inline; vertical-align: middle; margin-right: 0.5rem;">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a></li>
+                    <li><a href="#troubleshooting">Solución de problemas</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 UIResearch. Desarrollado por <a href="https://www.linkedin.com/in/inginddie" target="_blank" rel="noopener">Diego Bustos</a> • Datos proporcionados por <a href="https://www.crossref.org/" target="_blank" rel="noopener">Crossref</a></p>
+        </div>
+    </footer>
+</body>
+</html>

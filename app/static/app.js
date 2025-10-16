@@ -1,0 +1,164 @@
+// Crossref Academic Search - Client-side JavaScript
+
+// Store current search results
+let currentResults = [];
+
+/**
+ * Escape HTML to prevent XSS attacks
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * Show status message
+ */
+function showStatus(message, type = 'info') {
+    const statusDiv = document.getElementById('status');
+    statusDiv.textContent = message;
+    statusDiv.className = `status status-${type}`;
+    statusDiv.style.display = 'block';
+}
+
+/**
+ * Hide status message
+ */
+function hideStatus() {
+    const statusDiv = document.getElementById('status');
+    statusDiv.style.display = 'none';
+}
+
+/**
+ * Display search results as cards
+ */
+function displayResults(items) {
+    const container = document.getElementById('results');
+    
+    if (!items || items.length === 0) {
+        container.innerHTML = '<p class="no-results">No se encontraron resultados</p>';
+        return;
+    }
+    
+    const cardsHtml = items.map(item => `
+        <article class="result-card">
+            <h2 class="result-title">${escapeHtml(item.title)}</h2>
+            
+            <p class="result-authors">${escapeHtml(item.authors)}</p>
+            
+            <p class="result-metadata">
+                <span class="journal">${escapeHtml(item.journal)}</span>
+                ${item.year ? `<span class="year"> • ${item.year}</span>` : ''}
+            </p>
+            
+            <p class="result-doi">
+                <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">
+                    ${escapeHtml(item.doi)}
+                </a>
+            </p>
+            
+            <details class="result-abstract">
+                <summary>Ver abstract</summary>
+                <p>${escapeHtml(item.abstract)}</p>
+            </details>
+        </article>
+    `).join('');
+    
+    container.innerHTML = cardsHtml;
+}
+
+/**
+ * Handle form submission
+ */
+document.getElementById('searchForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(e.target);
+    
+    // Handle checkbox (not included in FormData if unchecked)
+    if (!formData.has('has_abstract')) {
+        formData.set('has_abstract', 'false');
+    }
+    
+    // Build query params
+    const params = new URLSearchParams(formData);
+    
+    // Show loading status
+    showStatus('Buscando...', 'loading');
+    
+    // Hide export button
+    document.getElementById('exportCsv').style.display = 'none';
+    
+    // Clear previous results
+    document.getElementById('results').innerHTML = '';
+    
+    try {
+        // Make API request
+        const response = await fetch(`/search?${params}`);
+        const data = await response.json();
+        
+        if (response.ok) {
+            // Success
+            currentResults = data.items;
+            displayResults(data.items);
+            showStatus(`${data.count} resultado${data.count !== 1 ? 's' : ''} encontrado${data.count !== 1 ? 's' : ''}`, 'success');
+            
+            // Show export button if there are results
+            if (data.count > 0) {
+                document.getElementById('exportCsv').style.display = 'block';
+            }
+        } else {
+            // Error response from API
+            const errorMessage = data.error?.message || 'Error desconocido';
+            showStatus(`Error: ${errorMessage}`, 'error');
+        }
+    } catch (error) {
+        // Network or other error
+        console.error('Search error:', error);
+        showStatus('Error de conexión. Por favor, intenta de nuevo.', 'error');
+    }
+});
+
+/**
+ * Handle CSV export
+ */
+document.getElementById('exportCsv').addEventListener('click', async () => {
+    // Get current form data
+    const form = document.getElementById('searchForm');
+    const formData = new FormData(form);
+    
+    // Handle checkbox
+    if (!formData.has('has_abstract')) {
+        formData.set('has_abstract', 'false');
+    }
+    
+    // Build query params
+    const params = new URLSearchParams(formData);
+    
+    // Show status
+    showStatus('Generando CSV...', 'loading');
+    
+    try {
+        // Trigger download
+        window.location.href = `/export/csv?${params}`;
+        
+        // Show success message after a short delay
+        setTimeout(() => {
+            showStatus('CSV descargado exitosamente', 'success');
+        }, 1000);
+    } catch (error) {
+        console.error('Export error:', error);
+        showStatus('Error al exportar CSV', 'error');
+    }
+});
+
+/**
+ * Set default dates on page load
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Focus on search input
+    document.getElementById('q').focus();
+});

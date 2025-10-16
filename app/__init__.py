@@ -1,0 +1,1 @@
+"""Crossref Academic Search Application."""
