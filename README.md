@@ -43,8 +43,8 @@ UIResearch es una aplicación web moderna para buscar, filtrar y exportar refere
 
 1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/inginddie/uiresearch.git
-cd uiresearch
+git clone https://github.com/inginddie/uiresearch_academy.git
+cd uiresearch_academy
 ```
 
 2. **Instalar dependencias**
@@ -224,8 +224,8 @@ Las contribuciones son bienvenidas! Por favor:
 Si tienes problemas o preguntas:
 
 1. Revisa la [documentación](http://localhost:8000/static/docs.html)
-2. Busca en los [issues existentes](https://github.com/inginddie/uiresearch/issues)
-3. Crea un [nuevo issue](https://github.com/inginddie/uiresearch/issues/new)
+2. Busca en los [issues existentes](https://github.com/inginddie/uiresearch_academy/issues)
+3. Crea un [nuevo issue](https://github.com/inginddie/uiresearch_academy/issues/new)
 
 ---
 
