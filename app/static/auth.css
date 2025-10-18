@@ -308,26 +308,75 @@
     .auth-container {
         grid-template-columns: 1fr;
         gap: 40px;
-        padding: 40px 24px;
+        padding: 40px 20px;
     }
     
     .auth-card {
-        padding: 32px 24px;
+        padding: 32px 20px;
     }
     
     .auth-benefits {
-        padding: 32px 24px;
+        padding: 32px 20px;
     }
 }
 
 @media (max-width: 640px) {
+    .auth-container {
+        padding: 24px 16px;
+    }
+    
+    .auth-card {
+        padding: 24px 16px;
+        border-radius: 16px;
+    }
+    
     .auth-header h1 {
         font-size: 24px;
+    }
+    
+    .auth-header p {
+        font-size: 14px;
+    }
+    
+    .form-group input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 14px 16px;
     }
     
     .form-footer {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+    }
+    
+    .btn-primary {
+        font-size: 16px;
+        padding: 16px 24px;
+    }
+    
+    .auth-benefits {
+        padding: 24px 16px;
+    }
+    
+    .auth-benefits h3 {
+        font-size: 20px;
+    }
+    
+    .auth-benefits li {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 375px) {
+    .auth-card {
+        padding: 20px 12px;
+    }
+    
+    .auth-header h1 {
+        font-size: 22px;
+    }
+    
+    .form-group input {
+        padding: 12px 14px;
     }
 }
