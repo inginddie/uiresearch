@@ -31,6 +31,9 @@ UIResearch es una aplicación web moderna para buscar, filtrar y exportar refere
 - ⚡ **API REST completa** - Integración fácil con otras herramientas
 - 📈 **Métricas Prometheus** - Monitoreo y observabilidad
 - 🔒 **Rate limiting** - Protección contra abuso
+- 🔐 **Autenticación JWT** - Sistema de usuarios seguro
+- 💳 **Suscripciones** - Planes Free, Pro, Team y Academic
+- 📊 **PostgreSQL** - Base de datos robusta y escalable
 
 ## 🚀 Inicio rápido
 
