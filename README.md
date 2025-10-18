@@ -10,7 +10,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688.svg)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[Demo](http://localhost:8000) • [Documentación](http://localhost:8000/static/docs.html) • [API](http://localhost:8000/docs)
+[🚀 Demo en Vivo](https://web-production-f69ce.up.railway.app) • [📚 Documentación](https://web-production-f69ce.up.railway.app/docs) • [⚡ API](https://web-production-f69ce.up.railway.app/docs)
 
 </div>
 
@@ -86,6 +86,13 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 http://localhost:8000
 ```
+
+## 🌐 Demo en Producción
+
+La aplicación está desplegada y disponible en:
+- **URL**: https://web-production-f69ce.up.railway.app
+- **Documentación**: https://web-production-f69ce.up.railway.app/docs
+- **API Docs**: https://web-production-f69ce.up.railway.app/docs
 
 ## 📖 Uso
 
