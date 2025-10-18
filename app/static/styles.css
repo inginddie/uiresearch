@@ -776,6 +776,25 @@ footer {
     transition: all 0.2s;
 }
 
+/* Menu Overlay */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
 /* Responsive Navbar with Hamburger Menu */
 @media (max-width: 968px) {
     .mobile-menu-btn {
@@ -785,7 +804,7 @@ footer {
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%;
+        right: -350px;
         width: 300px;
         max-width: 85vw;
         height: 100vh;
@@ -797,22 +816,12 @@ footer {
         overflow-y: auto;
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 999;
+        visibility: hidden;
     }
     
     .nav-links.active {
         right: 0;
-    }
-    
-    /* Overlay when menu is open */
-    .nav-links.active::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 300px;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1;
+        visibility: visible;
     }
     
     .nav-link {
