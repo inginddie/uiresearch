@@ -3,6 +3,79 @@
 // Store current search results
 let currentResults = [];
 
+// Auth functions
+function getToken() {
+    return localStorage.getItem('auth_token');
+}
+
+function isLoggedIn() {
+    return !!getToken();
+}
+
+function logout() {
+    localStorage.removeItem('auth_token');
+    updateAuthUI();
+    showStatus('Sesión cerrada exitosamente', 'success');
+}
+
+async function getCurrentUser() {
+    const token = getToken();
+    if (!token) return null;
+    
+    try {
+        const response = await fetch('/api/auth/me', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        if (response.ok) {
+            return await response.json();
+        } else {
+            // Token invalid, remove it
+            localStorage.removeItem('auth_token');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error getting current user:', error);
+        return null;
+    }
+}
+
+function updateAuthUI() {
+    const authButtons = document.getElementById('auth-buttons');
+    const userMenu = document.getElementById('user-menu');
+    const userEmail = document.getElementById('user-email');
+    
+    if (isLoggedIn()) {
+        authButtons.style.display = 'none';
+        userMenu.style.display = 'flex';
+        userMenu.style.gap = '12px';
+        userMenu.style.alignItems = 'center';
+        
+        // Get and display user info
+        getCurrentUser().then(user => {
+            if (user) {
+                userEmail.textContent = user.email;
+            }
+        });
+    } else {
+        authButtons.style.display = 'flex';
+        userMenu.style.display = 'none';
+    }
+}
+
+// Initialize auth UI on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateAuthUI();
+    
+    // Add logout button handler
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+});
+
 /**
  * Escape HTML to prevent XSS attacks
  */
