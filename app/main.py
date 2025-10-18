@@ -174,6 +174,26 @@ async def healthcheck() -> Dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/debug")
+async def debug_info():
+    """
+    Debug endpoint to check application status.
+    
+    Returns:
+        Debug information
+    """
+    import os
+    return {
+        "status": "running",
+        "static_files_exist": os.path.exists("app/static"),
+        "index_exists": os.path.exists("app/static/index.html"),
+        "pricing_exists": os.path.exists("app/static/pricing.html"),
+        "login_exists": os.path.exists("app/static/login.html"),
+        "auth_router_loaded": hasattr(app, 'routes'),
+        "database_url_set": bool(os.getenv("DATABASE_URL")),
+    }
+
+
 @app.get("/")
 async def root():
     """
@@ -194,6 +214,39 @@ async def docs():
         HTML page
     """
     return FileResponse("app/static/docs.html")
+
+
+@app.get("/pricing")
+async def pricing():
+    """
+    Serve the pricing page.
+    
+    Returns:
+        HTML page
+    """
+    return FileResponse("app/static/pricing.html")
+
+
+@app.get("/login")
+async def login():
+    """
+    Serve the login page.
+    
+    Returns:
+        HTML page
+    """
+    return FileResponse("app/static/login.html")
+
+
+@app.get("/signup")
+async def signup():
+    """
+    Serve the signup page.
+    
+    Returns:
+        HTML page
+    """
+    return FileResponse("app/static/signup.html")
 
 
 @app.get("/search")
