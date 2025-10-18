@@ -126,7 +126,7 @@ body {
     display: flex;
     gap: 1.5rem;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .nav-link {
@@ -136,6 +136,11 @@ body {
     font-size: 0.9375rem;
     transition: color 0.2s;
     position: relative;
+    display: inline-block;
+}
+
+.nav-link svg {
+    display: none;
 }
 
 .nav-link:hover {
@@ -761,7 +766,7 @@ footer {
 
 /* Mobile Menu Button - HIDDEN by default */
 .mobile-menu-btn {
-    display: none !important;
+    display: none;
     background: none;
     border: none;
     color: var(--gray-700);
@@ -771,18 +776,10 @@ footer {
     transition: all 0.2s;
 }
 
-/* Nav Link Icons - HIDDEN by default */
-.nav-link svg,
-.btn-signup svg,
-.btn-logout svg,
-#user-menu svg {
-    display: none !important;
-}
-
 /* Responsive Navbar with Hamburger Menu */
 @media (max-width: 968px) {
     .mobile-menu-btn {
-        display: block !important;
+        display: block;
     }
     
     .nav-links {
@@ -808,7 +805,7 @@ footer {
     
     .nav-link {
         padding: 14px 16px;
-        display: flex;
+        display: flex !important;
         align-items: center;
         gap: 12px;
         border-radius: 8px;
@@ -820,13 +817,17 @@ footer {
     }
     
     .nav-link svg {
-        display: block !important;
+        display: block;
         flex-shrink: 0;
     }
     
     .nav-link.active {
         background: var(--gray-100);
         color: var(--primary-600);
+    }
+    
+    .nav-link.active::after {
+        display: none;
     }
     
     #auth-buttons {
@@ -853,7 +854,7 @@ footer {
     }
     
     .btn-signup svg {
-        display: block !important;
+        display: block;
     }
     
     #user-menu {
@@ -871,7 +872,7 @@ footer {
     }
     
     #user-menu svg {
-        display: block !important;
+        display: block;
     }
     
     .btn-logout {
@@ -882,7 +883,7 @@ footer {
     }
     
     .btn-logout svg {
-        display: block !important;
+        display: block;
     }
 }
 
