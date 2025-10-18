@@ -778,7 +778,6 @@ footer {
 
 /* Menu Overlay */
 .menu-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -787,12 +786,15 @@ footer {
     background: rgba(0, 0, 0, 0.5);
     z-index: 998;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
 }
 
 .menu-overlay.active {
-    display: block;
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 /* Responsive Navbar with Hamburger Menu */
