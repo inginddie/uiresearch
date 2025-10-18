@@ -67,6 +67,14 @@ async def lifespan(app: FastAPI):
         mailto=settings.app_mailto
     )
     
+    # Connect to database
+    try:
+        from app.database import connect_db
+        await connect_db()
+        logger.info("Database connected successfully")
+    except Exception as e:
+        logger.warning(f"Database connection failed: {e}. Auth features will be disabled.")
+    
     # Initialize Crossref client
     crossref_client = CrossrefClient(
         user_agent=settings.app_user_agent,
@@ -84,17 +92,34 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     logger.info("Shutting down application")
+    
+    # Disconnect from database
+    try:
+        from app.database import disconnect_db
+        await disconnect_db()
+        logger.info("Database disconnected")
+    except Exception as e:
+        logger.warning(f"Database disconnection failed: {e}")
+    
     await crossref_client.close()
     logger.info("Application shutdown complete")
 
 
 # Create FastAPI app
 app = FastAPI(
-    title="Crossref Academic Search",
-    description="Search and export academic references from Crossref API",
-    version="1.0.0",
+    title="UIResearch - Academic Search",
+    description="Search and export academic references from Crossref API with authentication and subscriptions",
+    version="2.0.0",
     lifespan=lifespan
 )
+
+# Include auth router
+try:
+    from app.routers.auth import router as auth_router
+    app.include_router(auth_router)
+    logger.info("Auth router included")
+except Exception as e:
+    logger.warning(f"Failed to include auth router: {e}")
 
 # Add rate limiter to app state
 app.state.limiter = limiter
