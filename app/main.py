@@ -160,6 +160,17 @@ async def root():
     return FileResponse("app/static/index.html")
 
 
+@app.get("/docs")
+async def docs():
+    """
+    Serve the documentation page.
+    
+    Returns:
+        HTML page
+    """
+    return FileResponse("app/static/docs.html")
+
+
 @app.get("/search")
 @limiter.limit(settings.rate_limit_searches)
 async def search_endpoint(
