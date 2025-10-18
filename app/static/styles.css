@@ -759,9 +759,9 @@ footer {
 }
 
 
-/* Mobile Menu Button */
+/* Mobile Menu Button - HIDDEN by default */
 .mobile-menu-btn {
-    display: none;
+    display: none !important;
     background: none;
     border: none;
     color: var(--gray-700);
@@ -771,25 +771,18 @@ footer {
     transition: all 0.2s;
 }
 
-.mobile-menu-btn:hover {
-    background: var(--gray-100);
-}
-
-.mobile-menu-btn:active {
-    background: var(--gray-200);
-}
-
-/* Nav Link Icons */
+/* Nav Link Icons - HIDDEN by default */
 .nav-link svg,
 .btn-signup svg,
-.btn-logout svg {
-    display: none;
+.btn-logout svg,
+#user-menu svg {
+    display: none !important;
 }
 
 /* Responsive Navbar with Hamburger Menu */
 @media (max-width: 968px) {
     .mobile-menu-btn {
-        display: block;
+        display: block !important;
     }
     
     .nav-links {
@@ -827,7 +820,7 @@ footer {
     }
     
     .nav-link svg {
-        display: block;
+        display: block !important;
         flex-shrink: 0;
     }
     
@@ -860,7 +853,7 @@ footer {
     }
     
     .btn-signup svg {
-        display: block;
+        display: block !important;
     }
     
     #user-menu {
@@ -878,7 +871,7 @@ footer {
     }
     
     #user-menu svg {
-        display: block;
+        display: block !important;
     }
     
     .btn-logout {
@@ -889,7 +882,7 @@ footer {
     }
     
     .btn-logout svg {
-        display: block;
+        display: block !important;
     }
 }
 
