@@ -1,7 +1,7 @@
 """Authentication endpoints."""
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from app.models.user import UserCreate, UserLogin, UserResponse, Token
+from app.auth_models.user import UserCreate, UserLogin, UserResponse, Token
 from app.repositories import user_repository
 from app.services.auth_service import verify_password, create_access_token, verify_token
 from app.utils.logger import get_logger

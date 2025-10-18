@@ -2,7 +2,7 @@
 from typing import Optional
 from datetime import datetime
 from app.database import database
-from app.models.user import User, UserCreate
+from app.auth_models.user import User, UserCreate
 from app.services.auth_service import hash_password
 
 
